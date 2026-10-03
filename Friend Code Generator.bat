@@ -138,13 +138,25 @@ if not defined colorOk (
 cls
 goto start
 
-rem amount must be a decimal integer set /a can count to. Anything else
+rem Amount must be a decimal integer set /a can count to. Anything else
 rem used to spin forever and keep appending to Codes.txt.
 :validateAmount
 if "!amount!"=="" exit /b 1
-set "amountNonDigit="
-for /f "delims=0123456789" %%A in ("!amount!") do set "amountNonDigit=1"
-if defined amountNonDigit exit /b 1
+set "rest=!amount!"
+set "pos=0"
+:checkChar
+if "!rest!"=="" goto digitsChecked
+if !pos! GEQ 10 exit /b 1
+set "ch=!rest:~0,1!"
+set "rest=!rest:~1!"
+set "digitOk="
+if !pos! EQU 0 for %%D in (1 2 3 4 5 6 7 8 9) do if "!ch!"=="%%D" set "digitOk=1"
+if !pos! GTR 0 for %%D in (0 1 2 3 4 5 6 7 8 9) do if "!ch!"=="%%D" set "digitOk=1"
+if not defined digitOk exit /b 1
+set /a pos+=1
+goto checkChar
+:digitsChecked
+if !pos! EQU 0 exit /b 1
 set "amountNum="
 ver >nul
 set /a "amountNum=amount" 2>nul
