@@ -1,5 +1,5 @@
 1. Open the .bat
-2. Choose what type of code you wan't to generate
+2. Choose what type of code you want to generate
 3. Choose amount
 4. Wait until it finishes
 5. When finished open Codes.txt, there's your codes!
